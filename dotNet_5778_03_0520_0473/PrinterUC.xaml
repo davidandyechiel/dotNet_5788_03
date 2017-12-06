@@ -5,28 +5,28 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:dotNet_5778_03_0520_0473"
              mc:Ignorable="d" 
-             d:DesignHeight="160" d:DesignWidth="450" BorderThickness="1">
+             d:DesignHeight="160" d:DesignWidth="450" BorderThickness="1" BorderBrush="Black">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="14*"/>
-            <RowDefinition Height="55*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid  Grid.Row="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="37*"/>
-                <RowDefinition Height="73*"/>
-            </Grid.RowDefinitions>
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="155*"/>
-                <ColumnDefinition Width="69*"/>
-                <ColumnDefinition Width="224*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Label x:Name="pageLabel" Content="Pages:" HorizontalAlignment="Left" Margin="0,28.333,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+            <Label x:Name="inklabel" Content="Ink:" HorizontalAlignment="Left" Margin="0,29,0,0" VerticalAlignment="Top" Grid.RowSpan="2"/>
+            <ProgressBar x:Name="inkCountProgressBar" Grid.Column="1" HorizontalAlignment="Left" Height="10" Margin="10,35,0,0" VerticalAlignment="Top" Width="100" Value="23"/>
+            <Slider x:Name="pageCountSlider" Grid.Column="1" HorizontalAlignment="Left" Margin="106,20.333,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="5.274,-0.132" Value="200" Maximum="400"/>
         </Grid>
-        <Image Source="images/printer.jpg"/>
-
+        <Image  Grid.Row="0" Source="images/printer.jpg" />
+        <Label x:Name="printerNameLabel" Content="printer name" HorizontalAlignment="Center"  Grid.Row="1" VerticalAlignment="Center" Foreground="RoyalBlue" FontSize="16"/>
     </Grid>
 </UserControl>
