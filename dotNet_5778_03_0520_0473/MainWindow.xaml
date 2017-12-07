@@ -5,8 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet_5778_03_0520_0473"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="400" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80*"/>
+            <RowDefinition Height="20*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="printersGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <local:PrinterUC />
+            <local:PrinterUC Grid.Column="1"/>
+            <local:PrinterUC Grid.Column="2"/>
+        </Grid>
+        <Button x:Name="printButton" Content="Print" Margin="10" Grid.Row="1" FontSize="36"/>
+
     </Grid>
 </Window>
