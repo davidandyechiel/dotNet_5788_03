@@ -17,11 +17,11 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <local:PrinterUC Cursor="" />
-            <local:PrinterUC Grid.Column="1"/>
-            <local:PrinterUC Grid.Column="2"/>
+            <local:PrinterUC x:Name="Printer1" Grid.Column="0" Loaded="PrinterUC_Loaded_1" MouseLeftButtonDown="Printer1_MouseLeftButtonDown"/>
+            <local:PrinterUC x:Name="Printer2" Grid.Column="1" Loaded="PrinterUC_Loaded_2" MouseLeftButtonDown="Printer2_MouseLeftButtonDown"/>
+            <local:PrinterUC x:Name="Printer3" Grid.Column="2" Loaded="PrinterUC_Loaded" MouseLeftButtonDown="Printer3_MouseLeftButtonDown" Margin="0" Padding="0" Background="White" />
         </Grid>
-        <Button x:Name="printButton" Content="Print" Margin="10" Grid.Row="1" FontSize="36"/>
+        <Button x:Name="printButton" Content="Print" Margin="10" Grid.Row="1" FontSize="36" Click="printButton_Click"/>
 
     </Grid>
 </Window>

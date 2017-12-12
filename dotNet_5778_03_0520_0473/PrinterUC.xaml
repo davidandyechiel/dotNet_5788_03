@@ -3,30 +3,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:dotNet_5778_03_0520_0473"
              mc:Ignorable="d" 
               d:DesignHeight="300" d:DesignWidth="300" Width="Auto" Height="Auto" BorderBrush="Black" BorderThickness="1">
+    <UserControl.Resources>
+        <Color x:Key="Color1">Black</Color>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" UseLayoutRounding="False" Margin="0,2,0,-2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <Label x:Name="pageLabel" Content="Pages:" HorizontalAlignment="Left" Margin="0,28.333,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-            <Label x:Name="inklabel" Content="Ink:" HorizontalAlignment="Left" Margin="0,29,0,0" VerticalAlignment="Top" Grid.RowSpan="2"/>
-            <ProgressBar x:Name="inkCountProgressBar" Grid.Column="1" HorizontalAlignment="Left" Height="10" Margin="10,35,0,0" VerticalAlignment="Top" Width="100" Value="23"/>
-            <Slider x:Name="pageCountSlider" Grid.Column="1" HorizontalAlignment="Left" Margin="106,20.333,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="5.274,-0.132" Value="200" Maximum="400"/>
+            <Label x:Name="pageLabel" Content="Pages:" HorizontalAlignment="Left" Margin="-3,37,0,-9" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.581,0.154" IsManipulationEnabled="True" />
+
+
+
+
+            <Label x:Name="inkLabel" Content="Ink:" HorizontalAlignment="Left" Margin="0,1,0,23" Grid.Row="1"/>
+            <ProgressBar x:Name="inkCountProgressBar" Grid.Column="1" HorizontalAlignment="Left" Height="25" Margin="2,1,0,0" Grid.Row="1" VerticalAlignment="Top" Width="253" Value="{Binding InkCount, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:PrinterUC}}}"  ToolTip="{Binding Value , ElementName=inkCountProgressBar}" ToolTipService.ShowDuration="2000"  />
+            <Slider x:Name="pageCountSlider"  Grid.Row="1"  Maximum="394" Value="{Binding PageCount, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:PrinterUC}}}" Margin="0,41,0,-41" Grid.Column="1" Foreground="Black"/>
+
+
+
         </Grid>
         <Image  Grid.Row="0" Source="images/printer.jpg" />
-        <Label x:Name="printerNameLabel" Content="printer name" HorizontalAlignment="Center"  Grid.Row="1" VerticalAlignment="Center" Foreground="RoyalBlue" FontSize="16"/>
+        <Label x:Name="printerNameLabel"  Grid.Row="1" VerticalAlignment="Center" Foreground="RoyalBlue" FontSize="16" Margin="75,7,8,93" Grid.RowSpan="2" MouseEnter="printerNameLabel_MouseEnter" MouseLeave="printerNameLabel_MouseLeave" Content="{Binding ContentStringFormat, ElementName=printerNameLabel}" ContentStringFormat="{Binding PrinterName, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:PrinterUC}}}" />
     </Grid>
 </UserControl>
