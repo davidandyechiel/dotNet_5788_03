@@ -32,7 +32,7 @@ namespace dotNet_5778_03_0520_0473
         double ink;
         string name;
 
-        //  public event EventHandler<PrinterEventArgs> PageMissing;
+        //public event EventHandler<PrinterEventArgs> PageMissing;
         //  public event EventHandler<PrinterEventArgs> InkMissing;
         static Random rnd = new Random();
         static  int count = 1;
@@ -47,7 +47,8 @@ namespace dotNet_5778_03_0520_0473
             inkCountProgressBar = new ProgressBar();
             inkCountProgressBar.Value = ink;
 
-            pages = rnd.Next(0, MAX_PAGES);
+            pages = PageCount; rnd.Next(0, MAX_PAGES);
+            
             pageCountSlider = new Slider();
             pageCountSlider.Value = pages;
 
@@ -91,13 +92,11 @@ namespace dotNet_5778_03_0520_0473
             }
             set
             {
-                pages = value;
+                pages =  value;
                 if (PageCount <= 0)
                 {
                     pages = 0;
-                    SolidColorBrush brush = new SolidColorBrush();
-                    brush.Color = Colors.Red;
-                    pageLabel.Foreground = brush;
+                    this.pageLabel.Foreground = new SolidColorBrush(Colors.Red); 
                  // PageMissing();
                 }
             }
@@ -107,9 +106,10 @@ namespace dotNet_5778_03_0520_0473
 
         public void print()
         {
-            ink -= ((rnd.Next(10) / 10) + rnd.Next(0, (int)MAX_INK - 1));
-            pages -= (rnd.Next(0, MAX_PAGES));
-           // inkCountProgressBar.Value = ink;
+            this.Background = new SolidColorBrush(Colors.White);
+            //   ink -= ((rnd.Next(10) / 10) + rnd.Next(0, (int)MAX_INK - 1));
+            //   pages -= (rnd.Next(0, MAX_PAGES));
+            // inkCountProgressBar.Value = ink;
             //pageCountSlider.Value = pages;
         }
         public void addInk()
@@ -145,8 +145,9 @@ namespace dotNet_5778_03_0520_0473
             printerNameLabel.FontSize = 16;
         }
 
-        
-
-        
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Background = new SolidColorBrush(Colors.LightBlue);
+        }
     }
 }

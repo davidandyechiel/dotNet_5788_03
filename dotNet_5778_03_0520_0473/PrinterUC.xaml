@@ -37,7 +37,7 @@
 
 
         </Grid>
-        <Image  Grid.Row="0" Source="images/printer.jpg" />
+        <Image  Grid.Row="0" Source="images/printer.jpg" MouseLeftButtonDown="Image_MouseLeftButtonDown" Stretch="Fill" Margin="7,7,7,6" />
         <Label x:Name="printerNameLabel"  Grid.Row="1" VerticalAlignment="Center" Foreground="RoyalBlue" FontSize="16" Margin="75,7,8,93" Grid.RowSpan="2" MouseEnter="printerNameLabel_MouseEnter" MouseLeave="printerNameLabel_MouseLeave" Content="{Binding ContentStringFormat, ElementName=printerNameLabel}" ContentStringFormat="{Binding PrinterName, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:PrinterUC}}}" />
     </Grid>
 </UserControl>
