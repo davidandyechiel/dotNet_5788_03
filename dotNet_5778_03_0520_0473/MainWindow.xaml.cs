@@ -51,9 +51,12 @@ namespace dotNet_5778_03_0520_0473
 
         private void printButton_Click(object sender, RoutedEventArgs e)
         {
-            currentPrinter = queue.Dequeue();
-            currentPrinter.Foreground = new SolidColorBrush(Colors.White);
-            currentPrinter.print();
+            if (queue.Count != 0)
+            {
+                currentPrinter = queue.Dequeue();
+                currentPrinter.Foreground = new SolidColorBrush(Colors.White);
+                currentPrinter.print();
+            }   
         }
 
         private void Printer1_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -66,7 +69,6 @@ namespace dotNet_5778_03_0520_0473
         {
             this.Foreground = new SolidColorBrush(Colors.LightBlue);
             queue.Enqueue(Printer2);
-
         }
 
         private void Printer3_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
