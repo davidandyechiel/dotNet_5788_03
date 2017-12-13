@@ -28,9 +28,19 @@ namespace dotNet_5778_03_0520_0473
         Queue<PrinterUC> queue;
         public MainWindow()
         {
+           
+            InitializeComponent();
             currentPrinter = Printer1;
             queue = new Queue<PrinterUC>();
-            InitializeComponent();
+            foreach (Control item in printersGrid.Children)
+            {
+           //   if (item is PrinterUC)
+            //      ((PrinterUC)item).InkMissing += InkManager.
+             //     ((PrinterUC)item).PagesMissing += PageManager.
+            } 
+            
+
+
         }
 
 
@@ -51,9 +61,7 @@ namespace dotNet_5778_03_0520_0473
 
         private void printButton_Click(object sender, RoutedEventArgs e)
         {
-           
-            iii.Source = new BitmapImage(new Uri("images/warning.jpg", UriKind.Relative));
-            if (queue.Count != 0)
+             if (queue.Count != 0)
             {
                 currentPrinter = queue.Dequeue();
                 currentPrinter.Foreground = new SolidColorBrush(Colors.White);

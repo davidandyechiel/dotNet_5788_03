@@ -28,7 +28,7 @@ namespace dotNet_5778_03_0520_0473
         public InkManager(PrinterUC printer)
         {
             this.printer = printer;
-            this.printer.InkMissing += missingInk;
+            this.printer.InkMissing += missingInk; // suppose to add the event to the printer.
             InitializeComponent();
         }
 
@@ -40,13 +40,14 @@ namespace dotNet_5778_03_0520_0473
             if (e.Critical) // add image of Error or warning depending on the critical.
                 Critical_Img.Source = new BitmapImage(new Uri("images/Error.jpeg", UriKind.Relative));
             else Critical_Img.Source = new BitmapImage(new Uri("images/warning.jpg", UriKind.Relative));
-            inker.label.Content = "Time: " + e.Date.ToString() + "\n" + e.Name + "missing " + e.Error + "% of ink";
+
+            inker.label.Content = "Time: " + e.Date.ToString() + "\n" + e.Name + "missing " + e.Error + "% of ink"; // print the label
             inker.Show();
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            if (printer.InkCount == 0)
+            if (printer.InkCount == 0) // if the container is empty then add more ink.
                 printer.addInk();
             Close();
         }

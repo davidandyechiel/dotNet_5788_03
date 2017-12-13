@@ -43,18 +43,17 @@ namespace dotNet_5778_03_0520_0473
             printerNameLabel.ContentStringFormat = name;
             count++;
 
-
+            ink = (rnd.Next(10) / 10) + rnd.Next(0, (int)MAX_INK - 1); // set the ink
             inkCountProgressBar = new ProgressBar();
             inkCountProgressBar.Value = ink;
-            setInkLabelColor();
-            ink = (rnd.Next(10) / 10) + rnd.Next(0, (int)MAX_INK - 1); // set the ink
+            
 
             pages = PageCount + rnd.Next(-1, MAX_PAGES);
-
             pageCountSlider = new Slider();
             pageCountSlider.Value = pages;
 
             InitializeComponent();
+            setInkLabelColor(); // sets the color of the ink label
         }
 
         private void setInkLabelColor()
@@ -64,9 +63,9 @@ namespace dotNet_5778_03_0520_0473
             {
                 if (ink >= 10.0)
                     this.inkLabel.Foreground = new SolidColorBrush(Colors.Yellow); // if ink < 15 %
-                if (InkCount > 1.0)
+                else if (InkCount > 1.0)
                     this.inkLabel.Foreground = new SolidColorBrush(Colors.Orange); // if ink < 10 %
-                                                                                   //  this.inkLabel.Foreground = new SolidColorBrush(Colors.Red); // if ink < 1%
+                else this.inkLabel.Foreground = new SolidColorBrush(Colors.Red); // if ink < 1%
             }
         }
 
@@ -90,36 +89,24 @@ namespace dotNet_5778_03_0520_0473
             set
             {
                 ink = value;
-                setInkLabelColor();
+                setInkLabelColor(); // sets the lable color.
                 if (ink <= 15.0)
                 {
                     PrinterEventArgs InkStatus;
-                    if (ink >= 10.0)
+                    if (ink >= 10.0)  // 15 >= ink >= 10
 
-                        //  ink = 13.0;
+                        //  ink = 13.0; delete this line?
                         InkStatus = new PrinterEventArgs(false, (MIN_ADD_INK - InkCount).ToString(), PrinterName); // (critical, minimum ink to fill, printer name)
 
-                    if (InkCount > 1.0)
-
-                        //   ink = 9.0;
+                    else if (InkCount > 1.0)  // 10 >= ink >= 1
+                      //   ink = 9.0; delete this line?
                         InkStatus = new PrinterEventArgs(false, (MIN_ADD_INK - InkCount).ToString(), PrinterName);
-
-                    InkStatus = new PrinterEventArgs(true, (MIN_ADD_INK - InkCount).ToString(), PrinterName);
+                    // 1 > ink
+                    else InkStatus = new PrinterEventArgs(true, (MIN_ADD_INK - InkCount).ToString(), PrinterName);
 
                     InkMissing?.Invoke(this, InkStatus);// if InkMissing isnt empty ,invoke it
                 }
-
-
-                //if (InkCount > 15)
-                //{
-                //    ink = value;
-                //    this.pageLabel.Foreground = new SolidColorBrush(Colors.Black);
-
-                //}
-
             }
-
-
         }
 
         public int PageCount
@@ -138,11 +125,11 @@ namespace dotNet_5778_03_0520_0473
                     PrinterEventArgs noPages = new PrinterEventArgs(true, (MIN_ADD_PAGES - PageCount).ToString(), PrinterName);
                     PageMissing?.Invoke(this, noPages); // if pagemissing isnt empty invoke it
                 }
-                if (PageCount > 0)
+             /*   if (PageCount > 0)
                 {
                     pages = value;
                     this.pageLabel.Foreground = new SolidColorBrush(Colors.Black);
-                }
+                } // I think that this is not nessecery because it is defult. */
             }
 
         }
@@ -151,10 +138,10 @@ namespace dotNet_5778_03_0520_0473
         public void print()
         {
             this.Background = new SolidColorBrush(Colors.White);
-               ink -= ((rnd.Next(10) / 10) + rnd.Next(0, (int)MAX_INK - 1));
-               pages -= (rnd.Next(0, MAX_PAGES));
-             inkCountProgressBar.Value = ink;
-            pageCountSlider.Value = pages;
+               ink -= ((rnd.Next(10) / 10) + rnd.Next(0, (int)MAX_INK - 1)); // decrase random amount from the ink
+               pages -= (rnd.Next(0, MAX_PAGES)); // decrase random amount from the pages
+            inkCountProgressBar.Value = ink; // update the window
+            pageCountSlider.Value = pages; // update the window
         }
         public void addInk()
         {
@@ -181,12 +168,12 @@ namespace dotNet_5778_03_0520_0473
 
         private void printerNameLabel_MouseEnter(object sender, MouseEventArgs e)
         {
-            printerNameLabel.FontSize = 20;
+            printerNameLabel.FontSize = 20; // enlarge the font of print name label
         }
 
         private void printerNameLabel_MouseLeave(object sender, MouseEventArgs e)
         {
-            printerNameLabel.FontSize = 16;
+            printerNameLabel.FontSize = 16; // minimize the font of print name label to defult
         }
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
