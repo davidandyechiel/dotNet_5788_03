@@ -24,12 +24,12 @@ namespace dotNet_5778_03_0520_0473
     public partial class MainWindow : Window
     {
 
-        PrinterUC printer;
+        PrinterUC currentPrinter;
         Queue<PrinterUC> queue;
         SolidColorBrush brush = new SolidColorBrush();
         public MainWindow()
         {
-            printer = Printer1;
+            currentPrinter = Printer1;
             queue = new Queue<PrinterUC>();
             InitializeComponent();
         }
@@ -51,27 +51,28 @@ namespace dotNet_5778_03_0520_0473
 
         private void printButton_Click(object sender, RoutedEventArgs e)
         {
-            
-            printer.print();
+            currentPrinter = queue.Dequeue();
+            currentPrinter.Foreground = new SolidColorBrush(Colors.White);
+            currentPrinter.print();
         }
 
         private void Printer1_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-          //  queue.Enqueue(Printer1);
-        }
-
-        private void Printer2_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.Foreground = new SolidColorBrush(Colors.LightBlue);
             queue.Enqueue(Printer1);
         }
 
+        private void Printer2_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Foreground = new SolidColorBrush(Colors.LightBlue);
+            queue.Enqueue(Printer2);
+
+        }
+
         private void Printer3_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
-
-
-         //   queue.Enqueue(Printer1);
+            this.Foreground = new SolidColorBrush(Colors.LightBlue);
+            queue.Enqueue(Printer3);
         }
         
     }
