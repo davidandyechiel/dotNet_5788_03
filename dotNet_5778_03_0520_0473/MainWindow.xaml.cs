@@ -25,10 +25,12 @@ namespace dotNet_5778_03_0520_0473
     {
 
         PrinterUC printer;
+        Queue<PrinterUC> queue;
         SolidColorBrush brush = new SolidColorBrush();
         public MainWindow()
         {
             printer = Printer1;
+            queue = new Queue<PrinterUC>();
             InitializeComponent();
         }
 
@@ -55,22 +57,21 @@ namespace dotNet_5778_03_0520_0473
 
         private void Printer1_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            printer = Printer1;
+          //  queue.Enqueue(Printer1);
         }
 
         private void Printer2_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
-            
-            printer = Printer2;
+            this.Foreground = new SolidColorBrush(Colors.LightBlue);
+            queue.Enqueue(Printer1);
         }
 
         private void Printer3_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-           
 
 
-            printer = Printer3;
+
+         //   queue.Enqueue(Printer1);
         }
         
     }
