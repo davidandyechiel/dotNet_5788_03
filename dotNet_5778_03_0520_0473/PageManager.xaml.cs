@@ -34,15 +34,18 @@ namespace dotNet_5778_03_0520_0473
 
         private void missingPages(object sender, PrinterEventArgs e)
         {
+            printer = ((PrinterUC)sender);
             PageManager pager = new PageManager();
-            pager.label.Content = "Time: " + e.Date.ToString() + "\n" + e.Name + e.Error;
+            pager.label.Content = "Time: " + e.Date.ToString() + "\n" + e.Name + "missing: " +  e.Error + "pages";
             pager.Show();
         }
-        
-        private void button_Click(object sender, PrinterEventArgs e)
+
+        private void button_Click(object sender, RoutedEventArgs e)
         {
-            ((PrinterUC)sender).PageCount += int.Parse(e.Error);
+            printer.addPages();
             Close();
         }
+
+        
     }
 }

@@ -8,7 +8,7 @@
         Title="PageManager" Height="122" Width="300">
     <Grid Background="#FFE4E4E4">
         <Image x:Name="No_Pages" HorizontalAlignment="Left" Height="60" Margin="20,15,0,0" VerticalAlignment="Top" Width="75" Source="images/no pages.jpg" RenderTransformOrigin="0.533,0.583"/>
-        <Button x:Name="button" Content="Add Pages" HorizontalAlignment="Left" Margin="125,65,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+        <Button x:Name="button" Content="Add Pages" HorizontalAlignment="Left" Margin="125,65,0,0" VerticalAlignment="Top" Width="75" Click="button_Click" />
         <Label x:Name="label" Content="Label" HorizontalAlignment="Left" Margin="115,15,0,0" VerticalAlignment="Top" Height="45" Width="160"/>
 
     </Grid>

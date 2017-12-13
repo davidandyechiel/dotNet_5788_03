@@ -19,7 +19,7 @@ namespace dotNet_5778_03_0520_0473
     /// Interaction logic for PrinterUC.xaml
     /// </summary>
     /// 
-    
+
     public partial class PrinterUC : UserControl
     {
         const double MAX_INK = 100;
@@ -27,7 +27,7 @@ namespace dotNet_5778_03_0520_0473
         const double MAX_PRINT_INK = MAX_INK / 5.0;
         const int MAX_PAGES = 400;
         const int MIN_ADD_PAGES = MAX_PAGES / 10;
-       const int MAX_PRINT_PAGES = MAX_PAGES / 5;
+        const int MAX_PRINT_PAGES = MAX_PAGES / 5;
         int pages;
         double ink;
         string name;
@@ -35,7 +35,7 @@ namespace dotNet_5778_03_0520_0473
         public event EventHandler<PrinterEventArgs> PageMissing;
         public event EventHandler<PrinterEventArgs> InkMissing;
         static Random rnd = new Random();
-        static  int count = 1;
+        static int count = 1;
         public PrinterUC()
         {
             name = "Printer " + count.ToString(); // set the name
@@ -43,16 +43,31 @@ namespace dotNet_5778_03_0520_0473
             printerNameLabel.ContentStringFormat = name;
             count++;
 
-            ink = (rnd.Next(10) / 10) + rnd.Next(0, (int)MAX_INK - 1); // set the ink
+
             inkCountProgressBar = new ProgressBar();
             inkCountProgressBar.Value = ink;
+            setInkLabelColor();
+            ink = (rnd.Next(10) / 10) + rnd.Next(0, (int)MAX_INK - 1); // set the ink
 
-            pages = PageCount+ rnd.Next(-1, MAX_PAGES);
-            
+            pages = PageCount + rnd.Next(-1, MAX_PAGES);
+
             pageCountSlider = new Slider();
             pageCountSlider.Value = pages;
 
             InitializeComponent();
+        }
+
+        private void setInkLabelColor()
+        {
+
+            if (ink <= 15)
+            {
+                if (ink >= 10.0)
+                    this.inkLabel.Foreground = new SolidColorBrush(Colors.Yellow); // if ink < 15 %
+                if (InkCount > 1.0)
+                    this.inkLabel.Foreground = new SolidColorBrush(Colors.Orange); // if ink < 10 %
+                                                                                   //  this.inkLabel.Foreground = new SolidColorBrush(Colors.Red); // if ink < 1%
+            }
         }
 
 
@@ -63,7 +78,7 @@ namespace dotNet_5778_03_0520_0473
             {
                 return name;
             }
-            
+
         }
 
         public double InkCount
@@ -75,34 +90,35 @@ namespace dotNet_5778_03_0520_0473
             set
             {
                 ink = value;
-                if (InkCount <= 15.0 && InkCount >= 10.0)
+                setInkLabelColor();
+                if (ink <= 15.0)
                 {
-                    ink = 13.0;
-                   this.inkLabel.Foreground = new SolidColorBrush(Colors.Yellow);
-                   
-                    PrinterEventArgs LowInk = new PrinterEventArgs(true, InkCount.ToString(), PrinterName);
-                    PageMissing(this, LowInk);
-                }
-                if (InkCount <10.0 && InkCount >1.0)
-                {
-                    ink = 9.0;
-                        this.inkLabel.Foreground = new SolidColorBrush(Colors.Orange);
-                     PrinterEventArgs LowInk = new PrinterEventArgs(true, InkCount.ToString(), PrinterName);
-                      InkMissing(this, LowInk);
-                }
-                if (InkCount <=1.0)
-                    this.inkLabel.Foreground = new SolidColorBrush(Colors.Red);
-                PrinterEventArgs NoInk = new PrinterEventArgs(false, InkCount.ToString(), PrinterName);
-                InkMissing(this, NoInk);
-                if (InkCount > 15)
-                {
-                    ink = value;
-                    this.pageLabel.Foreground = new SolidColorBrush(Colors.Black);
+                    PrinterEventArgs InkStatus;
+                    if (ink >= 10.0)
 
+                        //  ink = 13.0;
+                        InkStatus = new PrinterEventArgs(false, (MIN_ADD_INK - InkCount).ToString(), PrinterName); // (critical, minimum ink to fill, printer name)
+
+                    if (InkCount > 1.0)
+
+                        //   ink = 9.0;
+                        InkStatus = new PrinterEventArgs(false, (MIN_ADD_INK - InkCount).ToString(), PrinterName);
+
+                    InkStatus = new PrinterEventArgs(true, (MIN_ADD_INK - InkCount).ToString(), PrinterName);
+
+                    InkMissing?.Invoke(this, InkStatus);// if InkMissing isnt empty ,invoke it
                 }
-                //            InkMissing();
+
+
+                //if (InkCount > 15)
+                //{
+                //    ink = value;
+                //    this.pageLabel.Foreground = new SolidColorBrush(Colors.Black);
+
+                //}
+
             }
-            
+
 
         }
 
@@ -114,19 +130,18 @@ namespace dotNet_5778_03_0520_0473
             }
             set
             {
-                pages =  value;
+                pages = value;
                 if (PageCount <= 0)
                 {
                     pages = 0;
                     this.pageLabel.Foreground = new SolidColorBrush(Colors.Red);
-                    PrinterEventArgs noPages = new PrinterEventArgs(true,  MIN_ADD_PAGES.ToString(), PrinterName); 
-                    PageMissing(this,noPages);
+                    PrinterEventArgs noPages = new PrinterEventArgs(true, (MIN_ADD_PAGES - PageCount).ToString(), PrinterName);
+                    PageMissing?.Invoke(this, noPages); // if pagemissing isnt empty invoke it
                 }
                 if (PageCount > 0)
                 {
                     pages = value;
                     this.pageLabel.Foreground = new SolidColorBrush(Colors.Black);
-                 
                 }
             }
 
@@ -136,10 +151,10 @@ namespace dotNet_5778_03_0520_0473
         public void print()
         {
             this.Background = new SolidColorBrush(Colors.White);
-            //   ink -= ((rnd.Next(10) / 10) + rnd.Next(0, (int)MAX_INK - 1));
-            //   pages -= (rnd.Next(0, MAX_PAGES));
-            // inkCountProgressBar.Value = ink;
-            //pageCountSlider.Value = pages;
+               ink -= ((rnd.Next(10) / 10) + rnd.Next(0, (int)MAX_INK - 1));
+               pages -= (rnd.Next(0, MAX_PAGES));
+             inkCountProgressBar.Value = ink;
+            pageCountSlider.Value = pages;
         }
         public void addInk()
         {
@@ -150,18 +165,18 @@ namespace dotNet_5778_03_0520_0473
             }
             else
                 ink += MAX_PRINT_INK;
-          }
+        }
 
         public void addPages()
         {
             if ((pages + MAX_PRINT_PAGES) > MAX_PAGES)
             {
-                int tempPages = rnd.Next(MAX_PAGES - pages) ; // pick random number between (0 to (diffrence))
+                int tempPages = rnd.Next(MAX_PAGES - pages); // pick random number between (0 to (diffrence))
                 pages += tempPages;
             }
             else
                 pages += MAX_PRINT_PAGES;
-         }
+        }
 
 
         private void printerNameLabel_MouseEnter(object sender, MouseEventArgs e)

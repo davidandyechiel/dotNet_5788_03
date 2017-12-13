@@ -26,7 +26,6 @@ namespace dotNet_5778_03_0520_0473
 
         PrinterUC currentPrinter;
         Queue<PrinterUC> queue;
-        SolidColorBrush brush = new SolidColorBrush();
         public MainWindow()
         {
             currentPrinter = Printer1;
@@ -34,9 +33,10 @@ namespace dotNet_5778_03_0520_0473
             InitializeComponent();
         }
 
+
         private void PrinterUC_Loaded_2(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void PrinterUC_Loaded_1(object sender, RoutedEventArgs e)
@@ -46,11 +46,13 @@ namespace dotNet_5778_03_0520_0473
 
         private void PrinterUC_Loaded(object sender, RoutedEventArgs e)
         {
-            
+           
         }
 
         private void printButton_Click(object sender, RoutedEventArgs e)
         {
+           
+            iii.Source = new BitmapImage(new Uri("images/warning.jpg", UriKind.Relative));
             if (queue.Count != 0)
             {
                 currentPrinter = queue.Dequeue();
