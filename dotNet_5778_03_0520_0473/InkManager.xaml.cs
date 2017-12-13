@@ -32,7 +32,7 @@ namespace dotNet_5778_03_0520_0473
             InitializeComponent();
         }
 
-        private void missingPages(object sender, PrinterEventArgs e)
+        private void missingInk(object sender, PrinterEventArgs e)
         {
             InkManager inker = new InkManager();
             inker.label.Content = "Time: " + e.Date.ToString() + "\n" + e.Name + e.Error;
@@ -41,7 +41,7 @@ namespace dotNet_5778_03_0520_0473
 
         private void button_Click(object sender, PrinterEventArgs e)
         {
-            ((PrinterUC)sender).PageCount += int.Parse(e.Error);
+           // ((PrinterUC)sender).PageCount += int.Parse(e.Error);
             Close();
         }
 
