@@ -6,13 +6,20 @@ using System.Threading.Tasks;
 
 namespace dotNet_5778_03_0520_0473
 {
-    class PrinterEventArgs
+    public class PrinterEventArgs:EventArgs    
     {
         private bool critical;
         private DateTime date;
         private string error;
         private string name;
 
+        public PrinterEventArgs()
+        {
+            critical = false;
+            error = " error" ;
+            name = "printer0";
+            date = DateTime.Now;
+        }
         public PrinterEventArgs(bool critical, string error, string name)
         {
             this.critical = critical;

@@ -32,8 +32,8 @@ namespace dotNet_5778_03_0520_0473
         double ink;
         string name;
 
-        //public event EventHandler<PrinterEventArgs> PageMissing;
-        //  public event EventHandler<PrinterEventArgs> InkMissing;
+        public event EventHandler<PrinterEventArgs> PageMissing;
+        public event EventHandler<PrinterEventArgs> InkMissing;
         static Random rnd = new Random();
         static  int count = 1;
         public PrinterUC()
@@ -47,7 +47,7 @@ namespace dotNet_5778_03_0520_0473
             inkCountProgressBar = new ProgressBar();
             inkCountProgressBar.Value = ink;
 
-            pages = PageCount; rnd.Next(0, MAX_PAGES);
+            pages = PageCount+ rnd.Next(-1, MAX_PAGES);
             
             pageCountSlider = new Slider();
             pageCountSlider.Value = pages;
@@ -75,12 +75,34 @@ namespace dotNet_5778_03_0520_0473
             set
             {
                 ink = value;
-                if (InkCount <= 0)
+                if (InkCount <= 15.0 && InkCount >= 10.0)
                 {
-                    ink = 0;
-        //            InkMissing();
+                    ink = 13.0;
+                   this.inkLabel.Foreground = new SolidColorBrush(Colors.Yellow);
+                   
+                    PrinterEventArgs LowInk = new PrinterEventArgs(true, InkCount.ToString(), PrinterName);
+                    PageMissing(this, LowInk);
                 }
+                if (InkCount <10.0 && InkCount >1.0)
+                {
+                    ink = 9.0;
+                        this.inkLabel.Foreground = new SolidColorBrush(Colors.Orange);
+                     PrinterEventArgs LowInk = new PrinterEventArgs(true, InkCount.ToString(), PrinterName);
+                      InkMissing(this, LowInk);
+                }
+                if (InkCount <=1.0)
+                    this.inkLabel.Foreground = new SolidColorBrush(Colors.Red);
+                PrinterEventArgs NoInk = new PrinterEventArgs(false, InkCount.ToString(), PrinterName);
+                InkMissing(this, NoInk);
+                if (InkCount > 15)
+                {
+                    ink = value;
+                    this.pageLabel.Foreground = new SolidColorBrush(Colors.Black);
+
+                }
+                //            InkMissing();
             }
+            
 
         }
 
@@ -96,8 +118,15 @@ namespace dotNet_5778_03_0520_0473
                 if (PageCount <= 0)
                 {
                     pages = 0;
-                    this.pageLabel.Foreground = new SolidColorBrush(Colors.Red); 
-                 // PageMissing();
+                    this.pageLabel.Foreground = new SolidColorBrush(Colors.Red);
+                    PrinterEventArgs noPages = new PrinterEventArgs(true,  MIN_ADD_PAGES.ToString(), PrinterName); 
+                    PageMissing(this,noPages);
+                }
+                if (PageCount > 0)
+                {
+                    pages = value;
+                    this.pageLabel.Foreground = new SolidColorBrush(Colors.Black);
+                 
                 }
             }
 
