@@ -31,6 +31,7 @@ namespace dotNet_5778_03_0520_0473
         int pages;
         double ink;
         string name;
+        private static int minPagesToAdd = 0;
 
         public event EventHandler<PrinterEventArgs> PageMissing;
         public event EventHandler<PrinterEventArgs> InkMissing;
@@ -46,7 +47,7 @@ namespace dotNet_5778_03_0520_0473
             ink = (rnd.Next(10) / 10) + rnd.Next(0, (int)MAX_INK - 1); // set the ink
             inkCountProgressBar = new ProgressBar();
             inkCountProgressBar.Value = ink;
-            
+
 
             pages = PageCount + rnd.Next(-1, MAX_PAGES);
             pageCountSlider = new Slider();
@@ -99,7 +100,7 @@ namespace dotNet_5778_03_0520_0473
                         InkStatus = new PrinterEventArgs(false, (MIN_ADD_INK - InkCount).ToString(), PrinterName); // (critical, minimum ink to fill, printer name)
 
                     else if (InkCount > 1.0)  // 10 >= ink >= 1
-                      //   ink = 9.0; delete this line?
+                                              //   ink = 9.0; delete this line?
                         InkStatus = new PrinterEventArgs(false, (MIN_ADD_INK - InkCount).ToString(), PrinterName);
                     // 1 > ink
                     else InkStatus = new PrinterEventArgs(true, (MIN_ADD_INK - InkCount).ToString(), PrinterName);
@@ -120,16 +121,17 @@ namespace dotNet_5778_03_0520_0473
                 pages = value;
                 if (PageCount <= 0)
                 {
+                    minPagesToAdd = -value;
+                    PrinterEventArgs noPages = new PrinterEventArgs(true, minPagesToAdd.ToString(), PrinterName);
                     pages = 0;
                     this.pageLabel.Foreground = new SolidColorBrush(Colors.Red);
-                    PrinterEventArgs noPages = new PrinterEventArgs(true, (MIN_ADD_PAGES - PageCount).ToString(), PrinterName);
                     PageMissing?.Invoke(this, noPages); // if pagemissing isnt empty invoke it
                 }
-             /*   if (PageCount > 0)
-                {
-                    pages = value;
-                    this.pageLabel.Foreground = new SolidColorBrush(Colors.Black);
-                } // I think that this is not nessecery because it is defult. */
+                /*   if (PageCount > 0)
+                   {
+                       pages = value;
+                       this.pageLabel.Foreground = new SolidColorBrush(Colors.Black);
+                   } // I think that this is not nessecery because it is defult. */
             }
 
         }
@@ -138,11 +140,10 @@ namespace dotNet_5778_03_0520_0473
         public void print()
         {
             this.Background = new SolidColorBrush(Colors.White);
-               ink -= ((rnd.Next(10) / 10) + rnd.Next(0, (int)MAX_INK - 1)); // decrase random amount from the ink
-               pages -= (rnd.Next(0, MAX_PAGES)); // decrase random amount from the pages
-            inkCountProgressBar.Value = ink; // update the window
-            pageCountSlider.Value = pages; // update the window
-        }
+            inkCountProgressBar.Value -= ((rnd.Next(10) / 10) + rnd.Next(0, (int)MAX_INK - 1)); // decrase random amount from the ink
+            pageCountSlider.Value -= (rnd.Next(0, MAX_PAGES)); // decrase random amount from the pages if the number is bigger than the number so the missingpage event will acure.
+         }
+
         public void addInk()
         {
             if ((ink + MAX_PRINT_INK) > MAX_INK)
@@ -156,13 +157,8 @@ namespace dotNet_5778_03_0520_0473
 
         public void addPages()
         {
-            if ((pages + MAX_PRINT_PAGES) > MAX_PAGES)
-            {
-                int tempPages = rnd.Next(MAX_PAGES - pages); // pick random number between (0 to (diffrence))
-                pages += tempPages;
-            }
-            else
-                pages += MAX_PRINT_PAGES;
+            pageCountSlider.Value += rnd.Next(minPagesToAdd, MAX_PAGES); // pick random number between (min pages to add and max capacity of pages)
+           
         }
 
 

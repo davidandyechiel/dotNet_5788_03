@@ -19,16 +19,15 @@ namespace dotNet_5778_03_0520_0473
     /// </summary>
     public partial class PageManager : Window
     {
-        PrinterUC printer;
+        private static PrinterUC  printer;
         public PageManager()
         {
-                       InitializeComponent();
+            InitializeComponent();
         }
 
-        public PageManager(PrinterUC printer)
+        public PageManager(PrinterUC _printer)
         {
-            this.printer = printer;
-            this.printer.PageMissing += missingPages;
+            _printer.PageMissing += missingPages;
             InitializeComponent();
         }
 
@@ -36,16 +35,19 @@ namespace dotNet_5778_03_0520_0473
         {
             printer = ((PrinterUC)sender);
             PageManager pager = new PageManager();
-            pager.label.Content = "Time: " + e.Date.ToString() + "\n" + e.Name + "missing: " +  e.Error + "pages";
+            pager.label.Content = "Time: " + e.Date.ToString() + "\n" + e.Name + " missing: " +  e.Error + " pages";
             pager.Show();
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            printer.addPages();
+           printer.addPages();
             Close();
         }
 
-        
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

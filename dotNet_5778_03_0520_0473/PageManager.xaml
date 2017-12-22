@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet_5778_03_0520_0473"
         mc:Ignorable="d"
-        Title="PageManager" Height="122" Width="300">
+        Title="PageManager" Height="142" Width="334">
     <Grid Background="#FFE4E4E4">
         <Image x:Name="No_Pages" HorizontalAlignment="Left" Height="60" Margin="20,15,0,0" VerticalAlignment="Top" Width="75" Source="images/no pages.jpg" RenderTransformOrigin="0.533,0.583"/>
-        <Button x:Name="button" Content="Add Pages" HorizontalAlignment="Left" Margin="125,65,0,0" VerticalAlignment="Top" Width="75" Click="button_Click" />
+        <Button x:Name="button" Content="Add Pages" HorizontalAlignment="Left" Margin="125,80,0,0" VerticalAlignment="Top" Width="75" Click="button_Click" />
         <Label x:Name="label" Content="Label" HorizontalAlignment="Left" Margin="115,15,0,0" VerticalAlignment="Top" Height="45" Width="160"/>
+        <Button x:Name="button1" Content="Ok" HorizontalAlignment="Left" Margin="220,80,0,0" VerticalAlignment="Top" Width="75" Click="button1_Click"/>
 
     </Grid>
 </Window>
