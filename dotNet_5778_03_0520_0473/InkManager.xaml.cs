@@ -25,12 +25,28 @@ namespace dotNet_5778_03_0520_0473
             InitializeComponent();
         }
 
-        public InkManager(PrinterUC printer)
+        public InkManager(PrinterUC _printer)
         {
-            this.printer = printer;
-            this.printer.InkMissing += missingInk; // suppose to add the event to the printer.
+            _printer.InkMissing += missingInk;
+           // this.printer = printer;
+            //this.printer.InkMissing += missingInk; // suppose to add the event to the printer.
             InitializeComponent();
         }
+
+        //private void Printer_InkMissing(object sender, PrinterEventArgs e)
+        //{
+        //    printer = ((PrinterUC)sender); // set the printer of this class. 
+        //    InkManager inker = new InkManager();
+
+        //    if (e.Critical) // add image of Error or warning depending on the critical.
+        //        Critical_Img.Source = new BitmapImage(new Uri("images/Error.jpeg", UriKind.Relative));
+        //    else Critical_Img.Source = new BitmapImage(new Uri("images/warning.jpg", UriKind.Relative));
+
+        //    inker.label.Content = "Time: " + e.Date.ToString() + "\n" + e.Name + "missing " + e.Error + "% of ink"; // print the label
+        //    inker.Show();
+
+        //    //throw new NotImplementedException();
+        //}
 
         private void missingInk(object sender, PrinterEventArgs e)
         {

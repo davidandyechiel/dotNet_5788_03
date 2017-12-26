@@ -34,9 +34,12 @@ namespace dotNet_5778_03_0520_0473
             queue = new Queue<PrinterUC>();
            foreach (Control item in printersGrid.Children)
             {
-             if (item is PrinterUC)
-            //     { ((PrinterUC)item).InkMissing += InkManager.
-                 { PageManager p = new PageManager(((PrinterUC)item)); }
+                if (item is PrinterUC)
+                {
+                    { InkManager i = new InkManager(((PrinterUC)item)); }
+                     //   { ((PrinterUC)item).InkMissing += InkManager.
+                    { PageManager p = new PageManager(((PrinterUC)item)); }
+                }
             } 
             
 

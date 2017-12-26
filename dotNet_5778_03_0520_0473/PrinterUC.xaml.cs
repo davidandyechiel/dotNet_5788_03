@@ -95,17 +95,24 @@ namespace dotNet_5778_03_0520_0473
                 {
                     PrinterEventArgs InkStatus;
                     if (ink >= 10.0)  // 15 >= ink >= 10
-
+                    {
                         //  ink = 13.0; delete this line?
                         InkStatus = new PrinterEventArgs(false, (MIN_ADD_INK - InkCount).ToString(), PrinterName); // (critical, minimum ink to fill, printer name)
-
+                        ink = value;
+                    }
                     else if (InkCount > 1.0)  // 10 >= ink >= 1
-                                              //   ink = 9.0; delete this line?
+                    {                         //   ink = 9.0; delete this line?
                         InkStatus = new PrinterEventArgs(false, (MIN_ADD_INK - InkCount).ToString(), PrinterName);
-                    // 1 > ink
-                    else InkStatus = new PrinterEventArgs(true, (MIN_ADD_INK - InkCount).ToString(), PrinterName);
+                        // 1 > ink
+                        ink = value;
+                    }
+                    else
+                    {
+                        InkStatus = new PrinterEventArgs(true, (MIN_ADD_INK - InkCount).ToString(), PrinterName);
 
-                    InkMissing?.Invoke(this, InkStatus);// if InkMissing isnt empty ,invoke it
+                        ink = value;
+                    }
+                        InkMissing?.Invoke(this, InkStatus);// if InkMissing isnt empty ,invoke it
                 }
             }
         }
@@ -127,11 +134,11 @@ namespace dotNet_5778_03_0520_0473
                     this.pageLabel.Foreground = new SolidColorBrush(Colors.Red);
                     PageMissing?.Invoke(this, noPages); // if pagemissing isnt empty invoke it
                 }
-                /*   if (PageCount > 0)
+                   if (PageCount > 0)
                    {
                        pages = value;
                        this.pageLabel.Foreground = new SolidColorBrush(Colors.Black);
-                   } // I think that this is not nessecery because it is defult. */
+                   } // I think that this is not nessecery because it is defult. 
             }
 
         }
@@ -146,13 +153,16 @@ namespace dotNet_5778_03_0520_0473
 
         public void addInk()
         {
+
             if ((ink + MAX_PRINT_INK) > MAX_INK)
             {
                 double tempInk = rnd.Next((int)((MAX_INK - ink))) + rnd.Next(10) / 10; // pick random number between (0 to (diffrence)) and add value between 0 to 1
-                ink += tempInk;
+               // ink += tempInk;
+                inkCountProgressBar.Value += tempInk;
             }
             else
-                ink += MAX_PRINT_INK;
+                inkCountProgressBar.Value += MAX_PRINT_INK;
+            //ink += MAX_PRINT_INK;
         }
 
         public void addPages()
