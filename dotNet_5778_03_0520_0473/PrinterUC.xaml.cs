@@ -101,18 +101,21 @@ namespace dotNet_5778_03_0520_0473
 
                         InkStatus = new PrinterEventArgs(false, minInkToAdd.ToString(), PrinterName); // (critical, minimum ink to fill, printer name)
                         ink = value;
+                        setInkLabelColor();
                     }
                     else if (InkCount > 1.0)  // 10 >= ink >= 1
                     {
                         InkStatus = new PrinterEventArgs(false, minInkToAdd.ToString(), PrinterName);
                         // 1 > ink
                         ink = value;
+                        setInkLabelColor();
                     }
                     else
                     {
                         InkStatus = new PrinterEventArgs(true, (MIN_ADD_INK - InkCount).ToString(), PrinterName);
 
                         ink = value;
+                        setInkLabelColor();
                     }
                     InkMissing?.Invoke(this, InkStatus);// if InkMissing isnt empty ,invoke it
                 }
