@@ -60,7 +60,7 @@ namespace dotNet_5778_03_0520_0473
 
         private void setInkLabelColor()
         {
-
+            this.inkLabel.Foreground = new SolidColorBrush(Colors.Black);  //defult black
             if (ink <= 15)
             {
                 if (ink >= 10.0)
@@ -98,12 +98,12 @@ namespace dotNet_5778_03_0520_0473
                     PrinterEventArgs InkStatus;
                     if (ink >= 10.0)  // 15 >= ink >= 10
                     {
-                        
+
                         InkStatus = new PrinterEventArgs(false, minInkToAdd.ToString(), PrinterName); // (critical, minimum ink to fill, printer name)
                         ink = value;
                     }
                     else if (InkCount > 1.0)  // 10 >= ink >= 1
-                    {                      
+                    {
                         InkStatus = new PrinterEventArgs(false, minInkToAdd.ToString(), PrinterName);
                         // 1 > ink
                         ink = value;
@@ -114,7 +114,7 @@ namespace dotNet_5778_03_0520_0473
 
                         ink = value;
                     }
-                        InkMissing?.Invoke(this, InkStatus);// if InkMissing isnt empty ,invoke it
+                    InkMissing?.Invoke(this, InkStatus);// if InkMissing isnt empty ,invoke it
                 }
             }
         }
@@ -136,11 +136,11 @@ namespace dotNet_5778_03_0520_0473
                     this.pageLabel.Foreground = new SolidColorBrush(Colors.Red);
                     PageMissing?.Invoke(this, noPages); // if page missing isnt empty invoke it
                 }
-                   if (PageCount > 0)
-                   {
-                       pages = value;
-                       this.pageLabel.Foreground = new SolidColorBrush(Colors.Black);
-                   } // I think that this is not nessecery because it is defult. 
+                if (PageCount > 0)
+                {
+                    pages = value;
+                    this.pageLabel.Foreground = new SolidColorBrush(Colors.Black);
+                }
             }
 
         }
@@ -151,26 +151,30 @@ namespace dotNet_5778_03_0520_0473
             this.Background = new SolidColorBrush(Colors.White);
             inkCountProgressBar.Value -= ((rnd.Next(10) / 10) + rnd.Next(0, (int)MAX_INK - 1)); // decrase random amount from the ink
             pageCountSlider.Value -= (rnd.Next(0, MAX_PAGES)); // decrase random amount from the pages if the number is bigger than the number so the missingpage event will acure.
-         }
+        }
 
         public void addInk()
         {
-            
+
             if ((ink + MAX_PRINT_INK) > MAX_INK)
             {
                 double tempInk = rnd.Next((int)((MAX_INK - ink))) + rnd.Next(10) / 10; // pick random number between (0 to (diffrence)) and add value between 0 to 1
-               // ink += tempInk;
+                ink += tempInk;
                 inkCountProgressBar.Value += tempInk;
             }
             else
+            {
+                ink += MAX_PRINT_INK;
                 inkCountProgressBar.Value += MAX_PRINT_INK;
-            //ink += MAX_PRINT_INK;
+            }
+            setInkLabelColor();
+
         }
 
         public void addPages()
         {
             pageCountSlider.Value += rnd.Next(minPagesToAdd, MAX_PAGES); // pick random number between (min pages to add and max capacity of pages)
-           
+
         }
 
 
