@@ -134,7 +134,7 @@ namespace dotNet_5778_03_0520_0473
                     PrinterEventArgs noPages = new PrinterEventArgs(true, minPagesToAdd.ToString(), PrinterName);
                     pages = 0;
                     this.pageLabel.Foreground = new SolidColorBrush(Colors.Red);
-                    PageMissing?.Invoke(this, noPages); // if pagemissing isnt empty invoke it
+                    PageMissing?.Invoke(this, noPages); // if page missing isnt empty invoke it
                 }
                    if (PageCount > 0)
                    {

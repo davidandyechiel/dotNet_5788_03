@@ -27,7 +27,7 @@ namespace dotNet_5778_03_0520_0473
 
         public PageManager(PrinterUC _printer)
         {
-            _printer.PageMissing += missingPages;
+            _printer.PageMissing += missingPages; // add missing int to the event of the current printer 
             InitializeComponent();
         }
 
@@ -35,7 +35,7 @@ namespace dotNet_5778_03_0520_0473
         {
             printer = ((PrinterUC)sender);
             PageManager pager = new PageManager();
-            pager.label.Content = "Time: " + e.Date.ToString() + "\n" + e.Name + " missing: " +  e.Error + " pages";
+            pager.label.Content = "Time: " + e.Date.ToString() + "\n" + e.Name + " missing: " +  e.Error + " pages"; // set the lable
             pager.Show();
         }
 
