@@ -52,10 +52,10 @@ namespace dotNet_5778_03_0520_0473
         {
             printer = ((PrinterUC)sender); // set the printer of this class. 
             InkManager inker = new InkManager();
-
+            
             if (e.Critical) // add image of Error or warning depending on the critical.
-                Critical_Img.Source = new BitmapImage(new Uri("images/Error.jpeg", UriKind.Relative));
-            else Critical_Img.Source = new BitmapImage(new Uri("images/warning.jpg", UriKind.Relative));
+                inker.Critical_Img.Source = new BitmapImage(new Uri("images/Error.jpeg", UriKind.Relative));
+            else inker.Critical_Img.Source = new BitmapImage(new Uri("images/warning.jpg", UriKind.Relative));
 
             inker.label.Content = "Time: " + e.Date.ToString() + "\n" + e.Name + "missing " + e.Error + "% of ink"; // print the label
             inker.Show();
