@@ -32,6 +32,7 @@ namespace dotNet_5778_03_0520_0473
         double ink;
         string name;
         private static int minPagesToAdd = 0;
+        private static double minInkToAdd = 0;
 
         public event EventHandler<PrinterEventArgs> PageMissing;
         public event EventHandler<PrinterEventArgs> InkMissing;
@@ -93,16 +94,17 @@ namespace dotNet_5778_03_0520_0473
                 setInkLabelColor(); // sets the lable color.
                 if (ink <= 15.0)
                 {
+                    minInkToAdd = -value;
                     PrinterEventArgs InkStatus;
                     if (ink >= 10.0)  // 15 >= ink >= 10
                     {
-                        //  ink = 13.0; delete this line?
-                        InkStatus = new PrinterEventArgs(false, (MIN_ADD_INK - InkCount).ToString(), PrinterName); // (critical, minimum ink to fill, printer name)
+                        
+                        InkStatus = new PrinterEventArgs(false, minInkToAdd.ToString(), PrinterName); // (critical, minimum ink to fill, printer name)
                         ink = value;
                     }
                     else if (InkCount > 1.0)  // 10 >= ink >= 1
-                    {                         //   ink = 9.0; delete this line?
-                        InkStatus = new PrinterEventArgs(false, (MIN_ADD_INK - InkCount).ToString(), PrinterName);
+                    {                      
+                        InkStatus = new PrinterEventArgs(false, minInkToAdd.ToString(), PrinterName);
                         // 1 > ink
                         ink = value;
                     }
@@ -153,7 +155,7 @@ namespace dotNet_5778_03_0520_0473
 
         public void addInk()
         {
-
+            
             if ((ink + MAX_PRINT_INK) > MAX_INK)
             {
                 double tempInk = rnd.Next((int)((MAX_INK - ink))) + rnd.Next(10) / 10; // pick random number between (0 to (diffrence)) and add value between 0 to 1

@@ -8,9 +8,10 @@
         Title="InkManager" Height="122" Width="300">
     <Grid Background="#FFE4E4E4">
         <Image x:Name="No_Ink" HorizontalAlignment="Left" Height="60" Margin="20,15,0,0" VerticalAlignment="Top" Width="55" Source="images/no ink.jpg" RenderTransformOrigin="0.533,0.583"/>
-        <Button x:Name="button" Content="Take Care" HorizontalAlignment="Left" Margin="125,65,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+        <Button x:Name="button" Content="Add Ink" HorizontalAlignment="Left" Margin="110,65,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
         <Label x:Name="label" Content="Label" HorizontalAlignment="Left" Margin="115,15,0,0" VerticalAlignment="Top" Height="45" Width="160"/>
         <Image x:Name="Critical_Img" HorizontalAlignment="Left" Height="15" Margin="75,15,0,0" VerticalAlignment="Top" Width="15"/>
+        <Button x:Name="button1" Content="OK" HorizontalAlignment="Left" Margin="195,65,0,0" VerticalAlignment="Top" Width="75" Click="button1_Click"/>
 
     </Grid>
 </Window>

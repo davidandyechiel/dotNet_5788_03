@@ -19,7 +19,7 @@ namespace dotNet_5778_03_0520_0473
     /// </summary>
     public partial class InkManager : Window
     {
-        PrinterUC printer;
+        private static PrinterUC printer;
         public InkManager()
         {
             InitializeComponent();
@@ -63,11 +63,14 @@ namespace dotNet_5778_03_0520_0473
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            if (printer.InkCount == 0) // if the container is empty then add more ink.
+          //  if (printer.InkCount <= 0) // if the container is empty then add more ink.
                 printer.addInk();
             Close();
         }
 
-
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
